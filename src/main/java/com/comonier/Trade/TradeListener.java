@@ -25,8 +25,17 @@ public class TradeListener implements Listener {
         
         if (!title.contains(tradeKey)) return;
 
-        event.setCancelled(true);
+        // --- TRAVA DE SEGURANÇA v1.1 ---
+        // Se a troca está nos 3 segundos finais, ninguém clica em nada.
         Player p = (Player) event.getWhoClicked();
+        if (plugin.getTradeFinalizer().isFinalizing(p.getUniqueId())) {
+            event.setCancelled(true);
+            p.updateInventory();
+            return;
+        }
+        // -------------------------------
+
+        event.setCancelled(true);
 
         if (event.getClick().isShiftClick() || event.getClick().isKeyboardClick()) {
             p.updateInventory();
@@ -53,7 +62,7 @@ public class TradeListener implements Listener {
 
         int slot = getFreeSlot(p.getUniqueId(), s, top);
         if (slot > -1) {
-            s.resetAcceptance(); // Reset pois houve mudança de item
+            s.resetAcceptance(); 
             s.setItem(p.getUniqueId(), slot, item.clone());
             event.setCurrentItem(null);
             plugin.getTradeSyncManager().sync(s, top);
@@ -68,11 +77,8 @@ public class TradeListener implements Listener {
         int slot = event.getSlot();
         UUID pID = p.getUniqueId();
 
-        // LOGICA DO OLHO DO FIM (UPDATE VISUAL)
         if (mat == Material.ENDER_EYE) {
-            // Só permite clicar no seu próprio botão de update
             if ((slot == 48 && pID.equals(s.getP1())) || (slot == 50 && pID.equals(s.getP2()))) {
-                // AQUI NÃO DAMOS RESET ACCEPTANCE
                 plugin.getTradeSyncManager().sync(s, top);
                 SoundManager.playSuccess(p);
             }
@@ -97,7 +103,7 @@ public class TradeListener implements Listener {
         if (isActionItem(mat)) {
             int col = slot % 9;
             if (((col == 3) && pID.equals(s.getP1())) || ((col == 5) && pID.equals(s.getP2()))) {
-                s.resetAcceptance(); // Reset pois mudou valores
+                s.resetAcceptance(); 
                 processValueButtons(p, mat, s);
                 plugin.getTradeSyncManager().sync(s, top);
             }
@@ -105,7 +111,7 @@ public class TradeListener implements Listener {
         }
 
         if (isTradeSlot(pID, s, slot)) {
-            s.resetAcceptance(); // Reset pois retirou item
+            s.resetAcceptance(); 
             p.getInventory().addItem(item.clone());
             s.removeItem(pID, slot);
             top.setItem(slot, null);

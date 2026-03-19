@@ -4,14 +4,23 @@
 
 # Plugin Settings
 settings:
+  # Language file to use (en or pt)
+  language: "pt"
+  # Default trade timeout in seconds
+  request-timeout: 30
+  
+  # --- NEW v1.1 SETTINGS ---
+  # Number formatting (Ex: pt-BR for 1.000,00 or en-US for 1,000.00)
+  number-format-locale: "pt-BR"
+  # Color for Coins in Head Lore (Minecraft color code without &)
+  # a = Light Green, 6 = Gold, e = Yellow
+  head-lore-coin-color: "a"
+  # -------------------------
+
   # Enable or disable Discord Webhook logging
   discord-webhook-enabled: true
   # Your Discord Webhook URL
   discord-webhook-url: "https://discord.com"
-  # Language file to use (en or pt)
-  language: "en"
-  # Default trade timeout in seconds
-  request-timeout: 30
 
 # Trade Settings
 trade:

@@ -3,7 +3,9 @@ package com.comonier.Trade;
 import me.ryanhamshire.GriefPrevention.GriefPrevention;
 import me.ryanhamshire.GriefPrevention.PlayerData;
 import net.milkbowl.vault.economy.Economy;
+import net.milkbowl.vault.chat.Chat;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import java.math.BigDecimal;
@@ -11,11 +13,13 @@ import java.math.RoundingMode;
 
 public class IntegrationManager {
     private Economy econ = null;
+    private Chat chat = null;
     private final Trade plugin;
 
     public IntegrationManager(Trade plugin) {
         this.plugin = plugin;
         setupEconomy();
+        setupChat();
     }
 
     private boolean setupEconomy() {
@@ -24,6 +28,22 @@ public class IntegrationManager {
         if (rsp == null) return false;
         econ = rsp.getProvider();
         return econ != null;
+    }
+
+    private boolean setupChat() {
+        if (Bukkit.getPluginManager().getPlugin("Vault") == null) return false;
+        RegisteredServiceProvider<Chat> rsp = Bukkit.getServicesManager().getRegistration(Chat.class);
+        if (rsp == null) return false;
+        chat = rsp.getProvider();
+        return chat != null;
+    }
+
+    // MÉTODO QUE O MAVEN PEDIU (Puxa cor do grupo/prefixo)
+    public String getPlayerNameWithPrefix(Player player) {
+        if (chat == null) return "§e" + player.getName();
+        String prefix = chat.getPlayerPrefix(player);
+        if (prefix == null || prefix.isEmpty()) return "§e" + player.getName();
+        return ChatColor.translateAlternateColorCodes('&', prefix + player.getName());
     }
 
     public boolean hasEconomy() {
@@ -50,7 +70,7 @@ public class IntegrationManager {
         econ.depositPlayer(player, toDeposit.doubleValue());
     }
 
-    // Métodos específicos para o GriefPrevention
+    // Métodos do GriefPrevention
     private PlayerData getGPData(Player p) {
         if (Bukkit.getPluginManager().getPlugin("GriefPrevention") == null) return null;
         return GriefPrevention.instance.dataStore.getPlayerData(p.getUniqueId());

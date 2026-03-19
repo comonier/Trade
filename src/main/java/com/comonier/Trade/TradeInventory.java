@@ -9,11 +9,16 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.SkullMeta;
 import org.bukkit.entity.Player;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 public class TradeInventory {
+
+    private static final DecimalFormat DF = new DecimalFormat("#,##0.00", new DecimalFormatSymbols(new Locale("pt", "BR")));
 
     public static Inventory create(Player p1, Player p2, TradeSession session) {
         MessageManager msg = Trade.getInstance().getMsgManager();
@@ -38,9 +43,7 @@ public class TradeInventory {
         if (p1 != null) inv.setItem(0, createSkull(p1));
         if (p2 != null) inv.setItem(8, createSkull(p2));
 
-        // Lado P1: Inicia na Coluna 1
         setupSide(inv, 1, s.getCoinsP1(), s.getBlocksP1(), s.hasP1Accepted(), s.hasP2Accepted(), 45, 46, 47, 48);
-        // Lado P2: Inicia na Coluna 5
         setupSide(inv, 5, s.getCoinsP2(), s.getBlocksP2(), s.hasP2Accepted(), s.hasP1Accepted(), 53, 52, 51, 50);
 
         clearTradeSlots(inv);
@@ -82,13 +85,12 @@ public class TradeInventory {
         inv.setItem(statusSlot, createItem(statusMat, statusMsg, null, meOk));
         inv.setItem(cancelSlot, createItem(Material.RED_STAINED_GLASS_PANE, m.getRawMessage("gui.cancel-button"), null, false));
         
-        // BOTÃO ATUALIZADO: Passando 'true' para ocultar a lore do encantamento
         List<String> updateLore = new ArrayList<>();
         updateLore.add("§7Clique para atualizar a visão");
         updateLore.add("§7e ver mudanças do outro jogador.");
         inv.setItem(updateSlot, createItem(Material.ENDER_EYE, "§b§lATUALIZAR VISÃO", updateLore, true));
 
-        String cText = (coins > 0) ? "§a+" + coins : "0";
+        String cText = (coins > 0) ? "§a+" + DF.format(coins) : "0";
         String bText = (blocks > 0) ? "§a+" + blocks : "0";
 
         List<String> cLore = new ArrayList<>();
@@ -107,7 +109,18 @@ public class TradeInventory {
         SkullMeta meta = (SkullMeta) head.getItemMeta();
         if (meta != null) {
             meta.setOwningPlayer(p);
-            meta.setDisplayName("§e" + p.getName());
+            meta.setDisplayName(Trade.getInstance().getIntegration().getPlayerNameWithPrefix(p));
+            
+            IntegrationManager integ = Trade.getInstance().getIntegration();
+            List<String> lore = new ArrayList<>();
+            lore.add(" ");
+            // MOSTRANDO STATUS REAIS COM FORMATAÇÃO §a VERDE CLARO E MILHAR/DECIMAL
+            lore.add("§7Coins: §a" + DF.format(integ.getBalance(p)));
+            lore.add("§7Blocos: §3" + integ.getAccruedBlocks(p));
+            lore.add("§7Bonus: §b" + integ.getBonusBlocks(p));
+            lore.add("§7Livres: §f" + integ.getRemainingBlocks(p));
+            
+            meta.setLore(lore);
             head.setItemMeta(meta);
         }
         return head;
@@ -121,7 +134,10 @@ public class TradeInventory {
             if (lore != null) meta.setLore(lore);
             if (enchant) {
                 meta.addEnchant(Enchantment.LUCK_OF_THE_SEA, 1, true);
-                meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+                // OCULTA TUDO PARA EVITAR VAZAMENTO NO BEDROCK
+                for (ItemFlag flag : ItemFlag.values()) {
+                    meta.addItemFlags(flag);
+                }
             }
             item.setItemMeta(meta);
         }
