@@ -1,0 +1,55 @@
+# English Messages (EN-US)
+prefix: "&8[&6Trade&8] &r"
+no-permission: "&cYou do not have permission to use this command."
+player-only: "&cOnly players can execute this command."
+player-not-found: "&cPlayer not found or offline."
+trade-self: "&cYou cannot trade with yourself."
+trade-already-sent: "&cYou already sent a trade invite to this player."
+trade-invited: "&aTrade invite sent to &e{player}&a!"
+trade-received: "&e{player} &awants to trade with you! Use &6/trade accept &ato start."
+trade-timeout: "&cThe trade invitation for &e{player} &chas expired."
+trade-accepted: "&aTrade accepted! Opening menu..."
+trade-cancelled: "&cTrade cancelled by &e{player}&c."
+trade-success: "&aTrade successfully completed!"
+# Removido o "[Trade]" daqui
+reload-success: "&aConfig & Messages reloaded!"
+
+# Closure Messages
+trade-closed-self: "&cYou closed the interface and the trade was cancelled."
+trade-closed-other: "&e{player} &cclosed the interface and the trade was cancelled."
+trade-system-cancelled: "&6The trade was automatically cancelled due to system shutdown or reload."
+
+# GUI Messages
+gui:
+  title: "&8Trading with: &0{player}"
+  chest-title: "&6Trade Chest - {player}"
+  accept-button: "&2&lACCEPT"
+  accept-status-off: "&7Waiting for you to accept..."
+  accept-status-on: "&aYou accepted! Waiting for the other..."
+  other-status-off: "&7The other player hasn't accepted yet."
+  other-status-on: "&aThe other player accepted!"
+  cancel-button: "&4&lCANCEL"
+  chest-full: "&cTrade cancelled! &e{player}'s &ctrade chest is full (27 items)."
+  gui-title-internal: "Trading"
+
+  # Coins
+  coins-add: "&aAdd 100 Coins"
+  coins-add-success: "&a+100 Coins added!"
+  coins-remove: "&cRemove 100 Coins"
+  coins-current: "&eTotal Coins: &6{amount}"
+  coins-insufficient: "&cYou don't have enough coins!"
+
+  # Claim Blocks
+  claims-add: "&6Add 100 Claim Blocks"
+  claims-add-success: "&6+100 Blocks added!"
+  claims-remove: "&eRemove 100 Claim Blocks"
+  claims-current: "&bTotal Blocks: &3{amount}"
+  claims-insufficient: "&cYou don't have enough claim blocks!"
+
+help:
+  header: "&8------- &6[ Trade Help ] &8-------"
+  line1: "&e/trade <player> &7- Sends trade invite"
+  line2: "&e/trade accept &7- Accepts pending invite"
+  line3: "&e/trade chest &7- Opens received items chest"
+  line4: "&e/trade reload &7- Reloads configurations"
+  info: "&7Developer: &f{dev} &7| Version: &f{version} &7| Support: &f1.21.1"

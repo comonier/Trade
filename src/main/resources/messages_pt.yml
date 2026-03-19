@@ -1,0 +1,55 @@
+# Mensagens em Português (PT-BR)
+prefix: "&8[&6Trade&8] &r"
+no-permission: "&cVocê não tem permissão para usar este comando."
+player-only: "&cApenas jogadores podem executar este comando."
+player-not-found: "&cJogador não encontrado ou está offline."
+trade-self: "&cVocê não pode trocar com você mesmo."
+trade-already-sent: "&cVocê já enviou um convite para este jogador."
+trade-invited: "&aConvite de troca enviado para &e{player}&a!"
+trade-received: "&e{player} &aquer trocar com você! Use &6/trade aceitar &apara começar."
+trade-timeout: "&cO convite de troca para &e{player} &cexpirou."
+trade-accepted: "&aTroca aceita! Abrindo menu..."
+trade-cancelled: "&cTroca cancelada por &e{player}&c."
+trade-success: "&aTroca realizada com sucesso!"
+# Removido o "[Trade]" daqui, pois o prefixo já o adiciona
+reload-success: "&aConfigurações e Mensagens recarregadas!"
+
+# Mensagens de Fechamento
+trade-closed-self: "&cVocê fechou a interface e a troca foi cancelada."
+trade-closed-other: "&e{player} &cfechou a interface e a troca foi cancelada."
+trade-system-cancelled: "&6A troca foi cancelada automaticamente devido ao desligamento ou reinicialização do sistema."
+
+# GUI Mensagens
+gui:
+  title: "&8Negociando com: &0{player}"
+  chest-title: "&6Trade Chest - {player}"
+  accept-button: "&2&lACEITAR"
+  accept-status-off: "&7Aguardando você aceitar..."
+  accept-status-on: "&aVocê aceitou! Aguardando o outro..."
+  other-status-off: "&7O outro jogador ainda não aceitou."
+  other-status-on: "&aO outro jogador aceitou!"
+  cancel-button: "&4&lCANCELAR"
+  chest-full: "&cTroca cancelada! O baú de trocas de &e{player} &cestá lotado (27 itens)."
+  gui-title-internal: "Negociando"
+
+  # Moedas
+  coins-add: "&aAdicionar 100 Coins"
+  coins-add-success: "&a+100 Coins adicionadas!"
+  coins-remove: "&cRemover 100 Coins"
+  coins-current: "&eTotal de Coins: &6{amount}"
+  coins-insufficient: "&cVocê não tem coins suficientes!"
+  
+  # Blocos
+  claims-add: "&6Adicionar 100 Blocos de Proteção"
+  claims-add-success: "&6+100 Blocos adicionados!"
+  claims-remove: "&eRemover 100 Blocos de Proteção"
+  claims-current: "&bTotal de Blocos: &3{amount}"
+  claims-insufficient: "&cVocê não tem blocos de proteção suficientes!"
+
+help:
+  header: "&8------- &6[ Trade Help ] &8-------"
+  line1: "&e/trade <jogador> &7- Envia convite de troca"
+  line2: "&e/trade aceitar &7- Aceita o convite pendente"
+  line3: "&e/trade chest &7- Abre o baú de itens recebidos"
+  line4: "&e/trade reload &7- Recarrega as configurações"
+  info: "&7Desenvolvedor: &f{dev} &7| Versão: &f{version} &7| Suporte: &f1.21.1"

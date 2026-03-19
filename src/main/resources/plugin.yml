@@ -1,0 +1,30 @@
+name: Trade
+version: '1.0'
+main: com.comonier.Trade.Trade
+api-version: '1.21'
+authors: [ comonier ]
+description: Secure trade system with UUID support (Bedrock/Geyser), Vault, GriefPrevention, and Trade Chest.
+softdepend: [Vault, GriefPrevention]
+load: POSTWORLD
+
+commands:
+  trade:
+    description: Main command to start trades, access the chest, or manage the plugin.
+    usage: /trade <player|accept|chest|reload|help>
+    aliases: [trocar, negociar, t]
+    permission: trade.use
+    permission-message: "&cYou do not have permission to use this command."
+
+permissions:
+  trade.use:
+    description: Allows players to send trade invites and use the base command.
+    default: true
+  trade.accept:
+    description: Allows players to accept pending trade invitations.
+    default: true
+  trade.chest:
+    description: Allows players to open their virtual chest of received items.
+    default: true
+  trade.admin:
+    description: Allows reloading the plugin configurations (/trade reload).
+    default: op

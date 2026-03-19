@@ -1,0 +1,44 @@
+# Maven - Compilação e artefatos
+target/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.utils_backup
+pom.xml.vfs
+release.properties
+dependency-reduced-pom.xml
+build.number
+
+# IDE - IntelliJ IDEA
+.idea/
+*.iml
+*.iws
+*.ipr
+out/
+
+# IDE - Eclipse
+.settings/
+.project
+.classpath
+.metadata/
+bin/
+
+# IDE - Visual Studio Code
+.vscode/
+.history/
+
+# Arquivos de Dados do Servidor (Não versionar dados reais)
+# Ignora a pasta de dados do plugin gerada no servidor de teste
+plugins/Trade/logs/
+plugins/Trade/storage.yml
+plugins/Trade/config.yml
+plugins/Trade/messages_*.yml
+
+# Arquivos do Sistema Operacional
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Logs de erro e arquivos temporários
+*.log
+*.tmp
+*.bak

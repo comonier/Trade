@@ -1,0 +1,35 @@
+# Trade Plugin Configuration
+# Developed for Minecraft 1.21.1
+# Support: Vault, GriefPrevention, Discord Webhooks
+
+# Plugin Settings
+settings:
+  # Enable or disable Discord Webhook logging
+  discord-webhook-enabled: true
+  # Your Discord Webhook URL
+  discord-webhook-url: "https://discord.com"
+  # Language file to use (en or pt)
+  language: "en"
+  # Default trade timeout in seconds
+  request-timeout: 30
+
+# Trade Settings
+trade:
+  # Minimum blocks of claim to trade per click
+  claim-blocks-per-click: 100
+  # Minimum economy amount (coins) to trade per click
+  economy-per-click: 100.0
+  # Inventory title
+  gui-title: "Trade Menu"
+
+# Integration Settings
+integrations:
+  # If false, economy trading will be disabled
+  use-vault: true
+  # If false, claim block trading will be disabled
+  use-griefprevention: true
+
+# Logging Settings
+logging:
+  # Should we log all successful trades to the /logs folder?
+  log-to-file: true
