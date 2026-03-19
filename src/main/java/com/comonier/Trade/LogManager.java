@@ -23,35 +23,28 @@ public class LogManager {
     }
 
     public void logTrade(Player p1, Player p2, TradeSession s, String status) {
-        // 1. Formatação das listas de itens (ID:Quantidade)
         String itemsP1 = formatItems(s.getItemsP1());
         String itemsP2 = formatItems(s.getItemsP2());
 
-        // 2. Montagem do corpo da mensagem no formato YAML solicitado
         StringBuilder yamlBody = new StringBuilder();
         yamlBody.append("```yaml\n");
-        
-        // De P1 para P2
-        yamlBody.append(p1.getName()).append(" ➜ ").append(p2.getName()).append("\n");
+        yamlBody.append(p1.getName()).append(" -> ").append(p2.getName()).append("\n");
         yamlBody.append("- items: ").append(itemsP1).append("\n");
         yamlBody.append("- coins: ").append((int)s.getCoinsP1()).append("\n");
-        yamlBody.append("- claimblocks: ").append(s.getBlocksP1()).append("\n");
+        yamlBody.append("- claimblocks: ").append(s.getBlocksP1()).append("\n\n");
 
-        // De P2 para P1
-        yamlBody.append(p2.getName()).append(" ➜ ").append(p1.getName()).append("\n");
+        yamlBody.append(p2.getName()).append(" -> ").append(p1.getName()).append("\n");
         yamlBody.append("- items: ").append(itemsP2).append("\n");
         yamlBody.append("- coins: ").append((int)s.getCoinsP2()).append("\n");
         yamlBody.append("- claimblocks: ").append(s.getBlocksP2()).append("\n");
         yamlBody.append("```");
 
-        String fullMessage = "Tradelog: P1: `" + p1.getName() + "` & P2: `" + p2.getName() + "`\n" + yamlBody.toString();
+        String fullMessage = "Tradelog: P1: " + p1.getName() + " & P2: " + p2.getName() + "\n" + yamlBody.toString();
 
-        // Salva em arquivo local
         if (plugin.getConfig().getBoolean("logging.log-to-file", true)) {
             saveToFile(p1, p2, fullMessage);
         }
 
-        // Envia para o Discord
         if (plugin.getConfig().getBoolean("settings.discord-webhook-enabled")) {
             sendDiscordWebhook(fullMessage);
         }
@@ -59,7 +52,6 @@ public class LogManager {
 
     private String formatItems(Map<Integer, ItemStack> items) {
         if (items == null || items.isEmpty()) return "empty";
-        
         return items.values().stream()
                 .filter(i -> i != null && !i.getType().isAir())
                 .map(i -> i.getType().name().toLowerCase() + ":" + i.getAmount())
@@ -81,9 +73,8 @@ public class LogManager {
 
     private void sendDiscordWebhook(String content) {
         String webhookUrl = plugin.getConfig().getString("settings.discord-webhook-url");
-        if (webhookUrl == null || webhookUrl.isEmpty() || webhookUrl.equals("https://discord.com")) return;
+        if (webhookUrl == null || webhookUrl.isEmpty() || webhookUrl.contains("discord.com") == false) return;
 
-        // Executa de forma assíncrona para não travar o servidor
         Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> {
             try {
                 URL url = new URL(webhookUrl);
@@ -92,9 +83,14 @@ public class LogManager {
                 con.setRequestProperty("Content-Type", "application/json");
                 con.setDoOutput(true);
 
-                // Escapa aspas para não quebrar o JSON
-                String escapedContent = content.replace("\"", "\\\"");
-                String json = "{\"content\": \"" + escapedContent + "\"}";
+                // CORREÇÃO: Escapando quebras de linha e aspas para JSON válido
+                String jsonSafeContent = content
+                        .replace("\\", "\\\\")
+                        .replace("\"", "\\\"")
+                        .replace("\n", "\\n")
+                        .replace("\r", "\\r");
+
+                String json = "{\"content\": \"" + jsonSafeContent + "\"}";
 
                 try (OutputStream os = con.getOutputStream()) {
                     byte[] input = json.getBytes(StandardCharsets.UTF_8);
@@ -102,8 +98,8 @@ public class LogManager {
                 }
                 
                 int responseCode = con.getResponseCode();
-                if (responseCode < 200 || responseCode >= 300) {
-                    plugin.getLogger().warning("Discord Webhook retornou erro: " + responseCode);
+                if (responseCode >= 400) {
+                    plugin.getLogger().warning("Discord Webhook erro " + responseCode + ". Verifique o URL ou formato.");
                 }
             } catch (Exception e) {
                 plugin.getLogger().warning("Falha ao enviar Webhook: " + e.getMessage());

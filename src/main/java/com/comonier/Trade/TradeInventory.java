@@ -40,7 +40,7 @@ public class TradeInventory {
 
         // Lado P1: Inicia na Coluna 1
         setupSide(inv, 1, s.getCoinsP1(), s.getBlocksP1(), s.hasP1Accepted(), s.hasP2Accepted(), 45, 46, 47, 48);
-        // Lado P2: Inicia na Coluna 5 (Botões nas ferramentas da coluna 5)
+        // Lado P2: Inicia na Coluna 5
         setupSide(inv, 5, s.getCoinsP2(), s.getBlocksP2(), s.hasP2Accepted(), s.hasP1Accepted(), 53, 52, 51, 50);
 
         clearTradeSlots(inv);
@@ -82,7 +82,7 @@ public class TradeInventory {
         inv.setItem(statusSlot, createItem(statusMat, statusMsg, null, meOk));
         inv.setItem(cancelSlot, createItem(Material.RED_STAINED_GLASS_PANE, m.getRawMessage("gui.cancel-button"), null, false));
         
-        // NOVO BOTÃO: OLHO DO FIM (Update)
+        // BOTÃO ATUALIZADO: Passando 'true' para ocultar a lore do encantamento
         List<String> updateLore = new ArrayList<>();
         updateLore.add("§7Clique para atualizar a visão");
         updateLore.add("§7e ver mudanças do outro jogador.");
