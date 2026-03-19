@@ -1,11 +1,19 @@
-# 📦 Trade Plugin v1.0
-**Secure & Advanced Trading System for Minecraft 1.21.1**
+# 📦 Trade Plugin v1.1
+**Secure & Advanced Trading System for Minecraft 1.21.1+**
 
 This plugin provides a robust, cross-platform (Java/Bedrock via Geyser) trading environment. It supports physical items, **Vault (Economy)**, and **GriefPrevention (Claim Blocks)**, ensuring that long-distance trades are safe and scam-proof.
 
 ---
 
-## 🛠 Features
+## 🛠 v1.1 Changelog (Hotfixes)
+*   **UI Restoration:** Restored the lore on Player Skulls inside the trade menu, showing Coins and Claim Blocks in real-time.
+*   **Discord Webhook:** Fixed Error 400 (Bad Request) by implementing proper JSON escaping for line breaks (\n) and special characters.
+*   **Ender Eye Metadata:** Fixed the "Sync Button" to hide enchantment technical text while maintaining the glow effect (ItemFlag.HIDE_ENCHANTS).
+*   **Version Consistency:** Updated all internal hooks to dynamically pull the version from plugin.yml.
+
+---
+
+## 🚀 Features
 *   **UUID Support:** Fully compatible with Bedrock/Geyser players.
 *   **Currency Trading:** Trade Vault Economy (Coins) directly in the GUI.
 *   **Land Protection Trading:** Trade GriefPrevention Claim Blocks.
@@ -16,6 +24,7 @@ This plugin provides a robust, cross-platform (Java/Bedrock via Geyser) trading 
 ---
 
 ## 🎮 Commands
+
 
 | Command | Description |
 | :--- | :--- |
@@ -53,6 +62,7 @@ After a successful trade, your items are **NOT** placed directly in your invento
 ---
 
 ## 🖼 GUI Icon Legend
+
 
 
 | Icon | Name | Function |
